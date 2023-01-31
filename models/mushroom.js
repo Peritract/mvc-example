@@ -10,6 +10,11 @@ class Mushroom {
         this.role = role;
     }
 
+    static getAll() {
+        // Return all relevant data as mushroom objects
+        return db.map(m => new Mushroom(m));
+    }
+
     static getOneById(id) {
 
         // Get the relevant mushroom as raw data
