@@ -44,7 +44,17 @@ class Mushroom {
         // Filter out this mushroom
         db = db.filter(m => m.id != this.id);
 
-        return "Mushroom devoured."
+        return true;
+    }
+
+    changeRole(newRole) {
+        
+        this.role = newRole;
+
+        // Swap it out in the data
+        db = db.map(m => m.id == this.id ? this : m);
+
+        return this;
     }
 
 }
