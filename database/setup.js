@@ -4,21 +4,19 @@ require("dotenv").config() // Load environment variables
 
 // Imports
 const fs = require("fs");
-const { Pool } = require("pg");
+
+const db = require("./connect");
 
 // Get the table definitions
-const query = fs.readFileSync("./database/tables.sql").toString();
-
-// Connect to the database
-const db = new Pool({
-    connectionString: process.env.DB_URL
-});
+const tableQuery = fs.readFileSync("./database/tables.sql").toString();
+const seedQuery = fs.readFileSync("./database/seed.sql").toString();
 
 // Create the tables
-async function createTables () {
-    await db.query(query); // Send the tables to the database
+async function setupDB () {
+    await db.query(tableQuery); // Send the tables to the database
+    await db.query(seedQuery); // Send the tables to the database
     db.end(); // Stop the pool
     console.log("Database ready.")
 }
 
-createTables();
+setupDB();

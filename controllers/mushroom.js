@@ -1,17 +1,16 @@
 const Mushroom = require("../models/mushroom");
 
-function index (req, res) {
-    const data = Mushroom.getAll();
+async function index (req, res) {
+    const data = await Mushroom.getAll();
     res.json(data);
 }
 
-function show (req, res) {
+async function show (req, res) {
     // Pull out the id
     const id = req.params.id;
     try {
 
-
-        const mushroom = Mushroom.getOneById(id);
+        const mushroom = await Mushroom.getOneById(id);
 
         res.json(mushroom)
     } catch (err) {
@@ -21,20 +20,19 @@ function show (req, res) {
             message: `Unable to locate mushroom with id '${id}'.`
         })
     }
-    
 }
 
-function destroy(req, res) {
+async function destroy(req, res) {
     // Pull out the id
     const id = req.params.id;
 
     try {
 
         // Get the mushroom
-        const m = Mushroom.getOneById(id);
+        const m = await Mushroom.getOneById(id);
 
         // Delete the mushroom
-        const deleted = m.delete();
+        const deleted = await m.delete();
 
         // Report back
         if (deleted) {
@@ -53,7 +51,7 @@ function destroy(req, res) {
 
 }
 
-function update (req, res) {
+async function update (req, res) {
      // Pull out the id
     const id = req.params.id;
 
@@ -67,10 +65,10 @@ function update (req, res) {
         }
 
         // Get the specific mushroom
-        const m = Mushroom.getOneById(id);
+        const m = await Mushroom.getOneById(id);
 
         // Update it
-        const updatedMushroom = m.changeRole(newRole);
+        const updatedMushroom = await m.changeRole(newRole);
 
         // Send it back
         res.json(updatedMushroom);

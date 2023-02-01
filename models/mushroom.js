@@ -1,24 +1,26 @@
-let db = require("../database/mushrooms");
+let db = require("../database/connect");
 
 class Mushroom {
 
-    constructor({ id, name, species, age, role }) {
-        this.id = id;
-        this.name = name;
-        this.species = species;
+    constructor({ mushroom_id, mushroom_name, age, mushroom_role }) {
+        this.id = mushroom_id;
+        this.name = mushroom_name;
         this.age = age;
-        this.role = role;
+        this.role = mushroom_role;
     }
 
-    static getAll() {
+    static async getAll() {
         // Return all relevant data as mushroom objects
-        return db.map(m => new Mushroom(m));
+        const res = await db.query("SELECT * FROM mushroom;");
+        return res.rows.map(m => new Mushroom(m));
     }
 
-    static getOneById(id) {
+    static async getOneById(id) {
 
         // Get the relevant mushroom as raw data
-        const m = db.find(m => m.id == id);
+        const res = await db.query("SELECT * FROM mushroom WHERE mushroom_id = $1", [ id ])
+
+        const m = res.rows[0]; 
 
         if (m) {
             // convert it to a Mushroom object and return it
@@ -29,7 +31,7 @@ class Mushroom {
 
     }
 
-    static create(data) {
+    static async create(data) {
 
         data.id = db.length + 1;
 
@@ -39,7 +41,7 @@ class Mushroom {
 
     }
 
-    delete() {
+    async delete() {
 
         // Filter out this mushroom
         db = db.filter(m => m.id != this.id);
@@ -47,7 +49,7 @@ class Mushroom {
         return true;
     }
 
-    changeRole(newRole) {
+    async changeRole(newRole) {
         
         this.role = newRole;
 
