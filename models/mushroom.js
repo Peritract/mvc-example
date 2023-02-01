@@ -33,11 +33,9 @@ class Mushroom {
 
     static async create(data) {
 
-        data.id = db.length + 1;
+        console.log(data);
 
-        db.push(data);
-
-        return new Mushroom(data);
+        return [];
 
     }
 

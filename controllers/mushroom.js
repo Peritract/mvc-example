@@ -22,6 +22,30 @@ async function show (req, res) {
     }
 }
 
+async function create(req, res) {
+
+    // Read the body
+    const body = req.body;
+
+    try {
+        // Check it has all the required elements
+        if (["name", "age", "role"].every(p => Object.hasOwn(body, p))) {
+
+            const mushroom = await Mushroom.create(body);
+            res.status(201).json(mushroom);
+
+        } else {
+            throw new Error("Invalid properties.");
+        }
+    } catch (err) {
+        console.log(err.message);
+        res.status(404).json({
+            error: true,
+            message: `Unable to create mushroom.`
+        })
+    }
+}
+
 async function destroy(req, res) {
     // Pull out the id
     const id = req.params.id;
@@ -86,5 +110,6 @@ module.exports = {
     index,
     show,
     destroy,
-    update
+    update,
+    create
 }

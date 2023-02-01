@@ -7,6 +7,7 @@ const mushroomRouter = Router();
 
 // Route definitions
 mushroomRouter.get("/", mushroomController.index); // /mushrooms/
+mushroomRouter.post("/", mushroomController.create);
 mushroomRouter.get("/:id", mushroomController.show);
 mushroomRouter.delete("/:id", mushroomController.destroy);
 mushroomRouter.patch("/:id", mushroomController.update);
