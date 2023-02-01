@@ -59,12 +59,12 @@ function update (req, res) {
 
     try {
 
-            // Pull the new role
-            const newRole = req.body.newRole; // could also pull from req.query of sent in a different way
+        // Pull the new role
+        const newRole = req.body.newRole; // could also pull from req.query of sent in a different way
 
-            if (!newRole || newRole.length < 2) {
-                throw new Error("Invalid role");
-            }
+        if (!newRole || newRole.length < 2) {
+            throw new Error("Invalid role");
+        }
 
         // Get the specific mushroom
         const m = Mushroom.getOneById(id);
