@@ -4,9 +4,20 @@ A project about the savage mushroom-people who live in the caverns below the cit
 
 ![mushroom people](./assets/mushroom-people.jpg)
 
+## Environment
+
+This app requires a `.env` to run locally. It needs the following information:
+
+```bash
+PORT=XXXX
+DB_URL=XXXXXXXXXXXXXXXXXXX
+```
+
 ## Installation
 
-`npm run install -D`
+`npm run install -D` to get all required libraries.
+
+`npm run setup` to create the database tables.
 
 ## Development server
 

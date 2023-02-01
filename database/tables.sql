@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS friendship;
+DROP TABLE IF EXISTS mushroom;
+
 CREATE TABLE mushroom (
     mushroom_id INT GENERATED ALWAYS AS IDENTITY,
     mushroom_name VARCHAR(10) NOT NULL,
