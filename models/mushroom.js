@@ -31,30 +31,36 @@ class Mushroom {
 
     }
 
-    static async create(data) {
+    static async create({ name, age, role}) {
 
-        console.log(data);
+        // { name, age, role }
 
-        return [];
+        const res = await db.query("INSERT INTO mushroom (mushroom_name, age, mushroom_role) VALUES ($1, $2, $3) RETURNING *;", [name, age, role]);
+
+        return new Mushroom(res.rows[0]);
 
     }
 
     async delete() {
 
-        // Filter out this mushroom
-        db = db.filter(m => m.id != this.id);
+        const res = await db.query("DELETE FROM mushroom WHERE mushroom_id = $1 RETURNING *;", [ this.id ]);
 
-        return true;
+        if (res.rows[0]) {
+            return true;
+        } else {
+            throw new Error("Unable to delete mushroom");
+        };
     }
 
     async changeRole(newRole) {
-        
-        this.role = newRole;
 
-        // Swap it out in the data
-        db = db.map(m => m.id == this.id ? this : m);
+        const res = await db.query("UPDATE mushroom SET mushroom_role = $1 WHERE mushroom_id = $2 RETURNING *;", [ newRole, this.id ]);
 
-        return this;
+        if (res.rows[0]) {
+            return new Mushroom(res.rows[0]);
+        } else {
+            throw new Error("Unable to update mushroom");
+        };
     }
 
 }
