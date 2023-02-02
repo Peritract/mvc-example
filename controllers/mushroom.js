@@ -1,7 +1,7 @@
 const Mushroom = require("../models/mushroom");
 
 async function index (req, res) {
-    const data = await Mushroom.All;
+    const data = await Mushroom.getAll();
     console.log(data);
     res.json(data);
 }
