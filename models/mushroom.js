@@ -2,12 +2,26 @@ let db = require("../database/connect");
 
 class Mushroom {
 
+    static height = 36;
+
     constructor({ mushroom_id, mushroom_name, age, mushroom_role }) {
         this.id = mushroom_id;
         this.name = mushroom_name;
         this.age = age;
         this.role = mushroom_role;
     }
+
+
+    static get All() {
+        return new Promise (async function(resolve, reject) {
+            try {
+                const res = await db.query("SELECT * FROM mushroom;");
+                resolve(res.rows.map(m => new Mushroom(m)));
+            } catch (err) {
+                reject(err);
+            }
+        }
+    )}
 
     static async getAll() {
         // Return all relevant data as mushroom objects
